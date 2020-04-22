@@ -181,6 +181,7 @@ export default function PrimarySearchAppBar() {
                                 <MenuIcon  />
                             </Button>
                             <Menu {...bindMenu(popupState)}>
+                              <MenuItem><Link to="/all-user">See All User</Link></MenuItem>
                             </Menu>
                             </React.Fragment>
                         )}

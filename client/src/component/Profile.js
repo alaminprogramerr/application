@@ -29,15 +29,19 @@ class Profile extends React.Component {
                 <Card  className="mt-5">
                     <CardActionArea>
                         <CardContent>
-                        <Typography gutterBottom variant="h5" component="h5">
-                            <p>Name: {this.state.user.name} </p>
-                            <p>Email: {this.state.user.email} </p>
-                            <p>Contact Number: {this.state.user.contactnumber} </p>
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary" className="mt-4" component="p">
-                            <h6 style={{textDecoration:'underline'}}>About yours:</h6>
-                            <p style={{fontSize:'18px'}}> {this.state.user.description} </p>
-                        </Typography>
+                            <div style={{textAlign:'center'}}> 
+                            {console.log(this.state.user.img)}
+                            {this.state.user.img?
+                                <img style={{borderRadius:'50%'}} src={require(`../uploads/${this.state.user.img}`)}/>:''
+                            }
+                            </div>
+                            <Typography variant="body2" color="textSecondary" className="mt-4" component="p">
+                                <p style={{fontSize:'18px'}}>Name: {this.state.user.name} </p>
+                                <p style={{fontSize:'18px'}}>Email: {this.state.user.email} </p>
+                                <p style={{fontSize:'18px'}}>Contact Number: {this.state.user.contactnumber} </p>
+                                <h6 style={{textDecoration:'underline',textAlign:'center'}}>About yours:</h6>
+                                <p  style={{fontSize:'18px'}}> {this.state.user.description} </p>
+                            </Typography>
                         </CardContent>
                     </CardActionArea>
                     <CardActions>

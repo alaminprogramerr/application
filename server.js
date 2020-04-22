@@ -5,28 +5,17 @@ const app = express()
 const mongoose = require('mongoose')
 const morgan = require('morgan')
 const cors = require('cors')
-
 app.use(morgan('dev'))
 app.use(cors())
 app.use(express.json())
 app.use(applicationRouter)
-
-
-mongoose.connect('mongodb://localhost/new_db',{useNewUrlParser:true, useFindAndModify:false, useUnifiedTopology:true})
+mongoose.connect('mongodb://localhost/application_DB',{useNewUrlParser:true, useFindAndModify:false, useUnifiedTopology:true})
 .then(()=>{
 	console.log("mongodb connected successfull ")
 })
 .catch(err=>{
 	console.log(err)
 })
-
-
-
 app.listen(PORT, ()=>{
     console.log('Server started on port on : ', PORT)
 })
-
-
-
-
-

@@ -17,26 +17,42 @@ class Sighup extends React.Component {
         description:'',
         password:'',
         massage:'',
-        errorLog:''
+        errorLog:{},
+        file:'',
+        fileName:''
     }
-    
-  
   changeHandler=(event)=>{
     event.preventDefault()
     this.setState({
       [event.target.name]:event.target.value
     })
   }
+  choose=()=>{
+    var file=document.getElementById('file')
+    file.click()
+  }
+  fileChoose = (event)=>{
+    this.setState({
+        file:event.target.files[0],
+        fileName:event.target.files[0].name
+    })
+  }
   submitHandler=(event)=>{
-        const {email, password ,name, contactnumber , description}=this.state
-        axios.post('/signup',{name,email, password,contactnumber,description})
+      let  formData= new FormData()
+      formData.append('email',this.state.email)
+      formData.append('password',this.state.password)
+      formData.append('name',this.state.name)
+      formData.append('contactnumber',this.state.contactnumber)
+      formData.append('description',this.state.description)
+      formData.append('file', this.state.file)
+        axios.post('/signup',formData)
         .then(res=>{
             console.log(res.data)
             this.setState({massage:res.data.massage})
         })
         .catch(err=>{
             if(err.response){
-                this.setState({errorLog:err.response.data.massage})
+                this.setState({errorLog:err.response.data})
             }
         })
     }
@@ -57,11 +73,22 @@ class Sighup extends React.Component {
                 </Card>:
                 <Card  className="mt-5">
                     <CardActionArea>
-                        <CardContent>
-                            <form >
-                                <h3>Sign Up Here</h3>
-                                <b className="text-warning"> {this.state.errorLog?this.state.errorLog:''} </b>
+                        <CardContent>  
+                            <form className="form">
+                                <h2 className="text-center"></h2>
+                                <b className="text-warning"> {this.state.errorLog.massage?<p>{this.state.errorLog.massage}</p>:''} </b>
+                                <b className="text-warning"> {this.state.errorLog.name?<p>{this.state.errorLog.name}</p>:''} </b>
+                                <b className="text-warning"> {this.state.errorLog.email?<p>{this.state.errorLog.email}</p>:''} </b>
+                                <b className="text-warning"> {this.state.errorLog.contactnumber?<p>{this.state.errorLog.contactnumber}</p>:''} </b>
+                                <b className="text-warning"> {this.state.errorLog.description?<p>{this.state.errorLog.description}</p>:''} </b>
+                                <b className="text-warning"> {this.state.errorLog.password?<p>{this.state.errorLog.password}</p>:''} </b>
+                                <b className="text-warning"> {this.state.errorLog.file?<p>{this.state.errorLog.file}</p>:''} </b>
                                 <p className="text-warning"> {this.state.massage} </p>
+                                <div className='text-center'>
+                                    <input onChange={this.fileChoose} id="file" style={{display:'none'}} type="file" />
+                                    <img onClick={this.choose} id="choose" style={{borderRadius:'100%', maxWidth:'100px'}} src={require('./image/camera.jpg')} />
+                                    <p className="text-center"> {this.state.fileName?this.state.fileName:"Select Profile Picture"} </p>
+                                </div>
                                 <div className="row">
                                     <div className="col-md-6">
                                         <Input onChange={this.changeHandler} className="form-control mt-3" placeholder="Name" name="name" value={this.state.name} />
@@ -97,6 +124,7 @@ class Sighup extends React.Component {
                 </Card>}
             </div>
         )
+        
     }
 }
 

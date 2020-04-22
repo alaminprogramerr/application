@@ -22,7 +22,7 @@ const createApplication=(req,res)=>{
     }
     const {title , description} = req.body
     const img= req.file.filename
-    console.log(title, img, description)
+    
     new applicationModel({
         title:title,
         img:img,
@@ -88,6 +88,7 @@ const getSingle=(req, res)=>{
         return res.status(500).json({massage:"server error occurd"})
     })
 }
+
 module.exports={
     createApplication,
     readApplication,
